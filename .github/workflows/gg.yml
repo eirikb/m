@@ -280,7 +280,7 @@ jobs:
     strategy:
       matrix:
         os: [ macos-latest-xlarge ]
-        cmd: [ "node -v", "rat -V" ]
+        cmd: [ "node -v" ]
 
     runs-on: ${{ matrix.os }}
     steps:
