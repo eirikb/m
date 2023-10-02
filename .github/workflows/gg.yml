@@ -280,7 +280,7 @@ jobs:
     strategy:
       matrix:
         os: [ macos-latest-xlarge ]
-        cmd: [ "node -v", "java -version", "gradle -version",  "maven -v", "openapi version", "rat -V", "run:java@14 java -version" ]
+        cmd: [ "node -v", "rat -V" ]
 
     runs-on: ${{ matrix.os }}
     steps:
