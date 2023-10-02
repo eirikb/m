@@ -46,7 +46,7 @@ jobs:
           - os: buildjet-2vcpu-ubuntu-2204-arm
             target: aarch64-unknown-linux-musl
           - os: macos-latest-xlarge
-            target: m1-apple-darwin
+            target: aarch64-apple-darwin
 
     runs-on: ${{ matrix.os }}
     needs: version
@@ -157,8 +157,8 @@ jobs:
             target: aarch64-unknown-linux-gnu
             stage4: aarch64-unknown-linux-musl
           - os: macos-latest-xlarge
-            target: m1-apple-darwin
-            stage4: m1-apple-darwin
+            target: aarch64-apple-darwin
+            stage4: aarch64-apple-darwin
 
     runs-on: ${{ matrix.os }}
 
