@@ -257,8 +257,30 @@ jobs:
     needs: stage1
     strategy:
       matrix:
-        os: [ ubuntu-20.04, ubuntu-22.04, windows-2019, windows-2022, macOS-11, macOS-12, macos-latest-xlarge ]
+        os: [ ubuntu-20.04, ubuntu-22.04, windows-2019, windows-2022, macOS-11, macOS-12 ]
         cmd: [ "node -v", "java -version", "gradle -version",  "maven -v", "openapi version", "rat -V", "run:java@14 java -version", "deno -V" ]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Download gg
+        uses: actions/download-artifact@v2
+        with:
+          name: gg.cmd
+
+      - name: Run!
+        shell: bash
+        run: |
+          set -x
+          sh gg.cmd -v ${{ matrix.cmd }}
+          echo "Nice, let's try again"
+          sh gg.cmd -v ${{ matrix.cmd }}
+
+  test-OS-M1:
+    needs: stage1
+    strategy:
+      matrix:
+        os: [ macos-latest-xlarge ]
+        cmd: [ "node -v", "java -version", "gradle -version",  "maven -v", "openapi version", "rat -V", "run:java@14 java -version" ]
 
     runs-on: ${{ matrix.os }}
     steps:
