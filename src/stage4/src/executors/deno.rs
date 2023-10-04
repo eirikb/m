@@ -36,6 +36,8 @@ impl Executor for Deno {
                         };
                         let arch = if asset.name.contains("x86_64") {
                             Some(Arch::X86_64)
+                        } else if asset.name.contains("aarch64") {
+                            Some(Arch::Arm64)
                         } else {
                             None
                         };
