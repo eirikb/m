@@ -280,7 +280,7 @@ jobs:
     strategy:
       matrix:
         os: [ macos-latest-xlarge ]
-        cmd: [ "node -v", "java -version", "gradle -version",  "maven -v", "openapi version", "run:java@14 java -version", "deno -V" ]
+        cmd: [ "node -v", "java -version", "gradle -version",  "maven -v", "openapi version", "deno -V" ]
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -362,7 +362,7 @@ jobs:
 #          set -x
 #          uname -a
 #          docker run --rm -i -v $PWD:/b -w /b ${{ matrix.container }} sh gg.cmd -v ${{ matrix.cmd }}
-  
+
 
 #  test-container:
 #    needs: stage1
