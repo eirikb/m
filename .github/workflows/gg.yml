@@ -37,14 +37,14 @@ jobs:
     strategy:
       matrix:
         include:
-#          - os: windows-latest
-#            target: x86_64-pc-windows-msvc
-#          - os: macos-latest
-#            target: x86_64-apple-darwin
-#          - os: ubuntu-latest
-#            target: x86_64-unknown-linux-musl
-#          - os: buildjet-2vcpu-ubuntu-2204-arm
-#            target: aarch64-unknown-linux-musl
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+          - os: macos-latest
+            target: x86_64-apple-darwin
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-musl
+          - os: buildjet-2vcpu-ubuntu-2204-arm
+            target: aarch64-unknown-linux-musl
           - os: macos-latest-xlarge
             target: aarch64-apple-darwin
 
@@ -140,22 +140,22 @@ jobs:
     strategy:
       matrix:
         include:
-#          - os: macos-latest
-#            target: x86_64-apple-darwin
-#            stage4: x86_64-apple-darwin
-#            # TODO: Version too new
-#          - os: ubuntu-20.04
-#            target: x86_64-unknown-linux-gnu
-#            stage4: x86_64-unknown-linux-musl
-#          - os: ubuntu-20.04
-#            target: x86_64-unknown-linux-musl
-#            stage4: x86_64-unknown-linux-musl
-#          - os: buildjet-2vcpu-ubuntu-2204-arm
-#            target: aarch64-unknown-linux-musl
-#            stage4: aarch64-unknown-linux-musl
-#          - os: buildjet-2vcpu-ubuntu-2204-arm
-#            target: aarch64-unknown-linux-gnu
-#            stage4: aarch64-unknown-linux-musl
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            stage4: x86_64-apple-darwin
+            # TODO: Version too new
+          - os: ubuntu-20.04
+            target: x86_64-unknown-linux-gnu
+            stage4: x86_64-unknown-linux-musl
+          - os: ubuntu-20.04
+            target: x86_64-unknown-linux-musl
+            stage4: x86_64-unknown-linux-musl
+          - os: buildjet-2vcpu-ubuntu-2204-arm
+            target: aarch64-unknown-linux-musl
+            stage4: aarch64-unknown-linux-musl
+          - os: buildjet-2vcpu-ubuntu-2204-arm
+            target: aarch64-unknown-linux-gnu
+            stage4: aarch64-unknown-linux-musl
           - os: macos-latest-xlarge
             target: aarch64-apple-darwin
             stage4: aarch64-apple-darwin
@@ -253,27 +253,27 @@ jobs:
           path: gg.cmd
 
 
-#  test-OS:
-#    needs: stage1
-#    strategy:
-#      matrix:
-#        os: [ ubuntu-20.04, ubuntu-22.04, windows-2019, windows-2022, macOS-11, macOS-12 ]
-#        cmd: [ "node -v", "java -version", "gradle -version",  "maven -v", "openapi version", "rat -V", "run:java@14 java -version", "deno -V" ]
-#
-#    runs-on: ${{ matrix.os }}
-#    steps:
-#      - name: Download gg
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: gg.cmd
-#
-#      - name: Run!
-#        shell: bash
-#        run: |
-#          set -x
-#          sh gg.cmd -v ${{ matrix.cmd }}
-#          echo "Nice, let's try again"
-#          sh gg.cmd -v ${{ matrix.cmd }}
+  test-OS:
+    needs: stage1
+    strategy:
+      matrix:
+        os: [ ubuntu-20.04, ubuntu-22.04, windows-2019, windows-2022, macOS-11, macOS-12 ]
+        cmd: [ "node -v", "java -version", "gradle -version",  "maven -v", "openapi version", "rat -V", "run:java@14 java -version", "deno -V" ]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Download gg
+        uses: actions/download-artifact@v2
+        with:
+          name: gg.cmd
+
+      - name: Run!
+        shell: bash
+        run: |
+          set -x
+          sh gg.cmd -v ${{ matrix.cmd }}
+          echo "Nice, let's try again"
+          sh gg.cmd -v ${{ matrix.cmd }}
 
   test-OS-M1:
     needs: stage1
@@ -297,143 +297,143 @@ jobs:
           echo "Nice, let's try again"
           sh gg.cmd -v ${{ matrix.cmd }}
 
-#  test-ARM:
-#    needs: stage1
-#    strategy:
-#      matrix:
-#        os: [ buildjet-2vcpu-ubuntu-2204-arm ]
-#        cmd: [ "java -version" ]
-#
-#    runs-on: ${{ matrix.os }}
-#    steps:
-#      - name: Download gg
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: gg.cmd
-#
-#      - name: Run!
-#        shell: bash
-#        run: |
-#          set -x
-#          sh gg.cmd -v ${{ matrix.cmd }}
-#          echo "Nice, let's try again"
-#          sh gg.cmd -v ${{ matrix.cmd }}
+  test-ARM:
+    needs: stage1
+    strategy:
+      matrix:
+        os: [ buildjet-2vcpu-ubuntu-2204-arm ]
+        cmd: [ "java -version" ]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Download gg
+        uses: actions/download-artifact@v2
+        with:
+          name: gg.cmd
+
+      - name: Run!
+        shell: bash
+        run: |
+          set -x
+          sh gg.cmd -v ${{ matrix.cmd }}
+          echo "Nice, let's try again"
+          sh gg.cmd -v ${{ matrix.cmd }}
 
 
-#  test-batch:
-#    needs: stage1
-#    strategy:
-#      matrix:
-#        os: [ windows-2019, windows-2022 ]
-#        cmd: [ "node -v", "java -version", "gradle -version", "maven -v", "openapi version", "rat -V", "run:java@14 java -version", "deno -V" ]
-#
-#    runs-on: ${{ matrix.os }}
-#    steps:
-#      - name: Download gg
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: gg.cmd
-#
-#      - name: Run!
-#        shell: cmd
-#        run: |
-#          .\gg.cmd -v ${{ matrix.cmd }}
-#          echo "Nice, let's try again"
-#          .\gg.cmd -v ${{ matrix.cmd }}
+  test-batch:
+    needs: stage1
+    strategy:
+      matrix:
+        os: [ windows-2019, windows-2022 ]
+        cmd: [ "node -v", "java -version", "gradle -version", "maven -v", "openapi version", "rat -V", "run:java@14 java -version", "deno -V" ]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Download gg
+        uses: actions/download-artifact@v2
+        with:
+          name: gg.cmd
+
+      - name: Run!
+        shell: cmd
+        run: |
+          .\gg.cmd -v ${{ matrix.cmd }}
+          echo "Nice, let's try again"
+          .\gg.cmd -v ${{ matrix.cmd }}
 
 
-#  test-ARM-container:
-#    needs: stage1
-#    strategy:
-#      matrix:
-#        os: [ buildjet-2vcpu-ubuntu-2204-arm ]
-#        container: [ alpine ]
-#        cmd: [ "java -version" ]
-#
-#    runs-on: ${{ matrix.os }}
-#    steps:
-#      - name: Download gg
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: gg.cmd
-#
-#      - name: Run!
-#        run: |
-#          set -x
-#          uname -a
-#          docker run --rm -i -v $PWD:/b -w /b ${{ matrix.container }} sh gg.cmd -v ${{ matrix.cmd }}
+  test-ARM-container:
+    needs: stage1
+    strategy:
+      matrix:
+        os: [ buildjet-2vcpu-ubuntu-2204-arm ]
+        container: [ alpine ]
+        cmd: [ "java -version" ]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Download gg
+        uses: actions/download-artifact@v3
+        with:
+          name: gg.cmd
+
+      - name: Run!
+        run: |
+          set -x
+          uname -a
+          docker run --rm -i -v $PWD:/b -w /b ${{ matrix.container }} sh gg.cmd -v ${{ matrix.cmd }}
 
 
-#  test-container:
-#    needs: stage1
-#    strategy:
-#      matrix:
-#        container: [ ubuntu, debian, alpine, archlinux, 'ubuntu:14.04', 'ubuntu:18.04' ]
-#        cmd: [ "node@14 -v", "java -version", "gradle -version", "maven -v", "openapi version", "rat -V", "run:java@14 java -version" ]
-#
-#    runs-on: ubuntu-latest
-#    container: ${{ matrix.container }}
-#    steps:
-#      - name: Download gg
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: gg.cmd
-#
-#      - name: Run!
-#        run: |
-#          set -x
-#
-#          # This is required for nodejs to run - not gg.cmd!
-#          if [ "${{ matrix.container }}" == "alpine" ]; then
-#            apk add libstdc++
-#          fi
-#
-#          sh gg.cmd -v ${{ matrix.cmd }}
-#          echo "Nice, let's try again"
-#          sh gg.cmd -v ${{ matrix.cmd }}
+  test-container:
+    needs: stage1
+    strategy:
+      matrix:
+        container: [ ubuntu, debian, alpine, archlinux, 'ubuntu:14.04', 'ubuntu:18.04' ]
+        cmd: [ "node@14 -v", "java -version", "gradle -version", "maven -v", "openapi version", "rat -V", "run:java@14 java -version" ]
+
+    runs-on: ubuntu-latest
+    container: ${{ matrix.container }}
+    steps:
+      - name: Download gg
+        uses: actions/download-artifact@v2
+        with:
+          name: gg.cmd
+
+      - name: Run!
+        run: |
+          set -x
+
+          # This is required for nodejs to run - not gg.cmd!
+          if [ "${{ matrix.container }}" == "alpine" ]; then
+            apk add libstdc++
+          fi
+
+          sh gg.cmd -v ${{ matrix.cmd }}
+          echo "Nice, let's try again"
+          sh gg.cmd -v ${{ matrix.cmd }}
 
 
-#  release:
-#    name: Release!
-#    needs: [ version, test-OS, test-batch, test-container ]
-#    runs-on: ubuntu-latest
-#    if: github.event.pull_request.merged == true
-#    steps:
-#      - name: Create Release
-#        id: create_release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ github.token }}
-#        with:
-#          tag_name: ${{ needs.version.outputs.version }}
-#          release_name: ${{ needs.version.outputs.version }}
-#          body: ${{ github.event.pull_request.body }}
-#
-#      - name: Download gg
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: gg.cmd
-#
-#      - name: Prepare upload
-#        shell: bash
-#        run: |
-#          set -x
-#          mkdir to_blob
-#          cp gg.cmd to_blob
-#
-#      - uses: LanceMcCarthy/Action-AzureBlobUpload@v2
-#        with:
-#          connection_string: ${{ secrets.ConnectionString }}
-#          container_name: $web
-#          source_folder: to_blob
-#
-#      - name: Upload Release Asset
-#        id: upload-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ github.token}}
-#        with:
-#          upload_url: ${{ steps.create_release.outputs.upload_url }}
-#          asset_path: ./gg.cmd
-#          asset_name: gg.cmd
-#          asset_content_type: text/x-shellscript
+  release:
+    name: Release!
+    needs: [ version, test-OS, test-batch, test-container, test-OS-M1, test-ARM, test-ARM-container ]
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          tag_name: ${{ needs.version.outputs.version }}
+          release_name: ${{ needs.version.outputs.version }}
+          body: ${{ github.event.pull_request.body }}
+
+      - name: Download gg
+        uses: actions/download-artifact@v2
+        with:
+          name: gg.cmd
+
+      - name: Prepare upload
+        shell: bash
+        run: |
+          set -x
+          mkdir to_blob
+          cp gg.cmd to_blob
+
+      - uses: LanceMcCarthy/Action-AzureBlobUpload@v2
+        with:
+          connection_string: ${{ secrets.ConnectionString }}
+          container_name: $web
+          source_folder: to_blob
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token}}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./gg.cmd
+          asset_name: gg.cmd
+          asset_content_type: text/x-shellscript
