@@ -393,47 +393,47 @@ jobs:
 #          sh gg.cmd -v ${{ matrix.cmd }}
 
 
-  release:
-    name: Release!
-    needs: [ version, test-OS, test-batch, test-container ]
-    runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
-    steps:
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          tag_name: ${{ needs.version.outputs.version }}
-          release_name: ${{ needs.version.outputs.version }}
-          body: ${{ github.event.pull_request.body }}
-
-      - name: Download gg
-        uses: actions/download-artifact@v2
-        with:
-          name: gg.cmd
-
-      - name: Prepare upload
-        shell: bash
-        run: |
-          set -x
-          mkdir to_blob
-          cp gg.cmd to_blob
-
-      - uses: LanceMcCarthy/Action-AzureBlobUpload@v2
-        with:
-          connection_string: ${{ secrets.ConnectionString }}
-          container_name: $web
-          source_folder: to_blob
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token}}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./gg.cmd
-          asset_name: gg.cmd
-          asset_content_type: text/x-shellscript
+#  release:
+#    name: Release!
+#    needs: [ version, test-OS, test-batch, test-container ]
+#    runs-on: ubuntu-latest
+#    if: github.event.pull_request.merged == true
+#    steps:
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ github.token }}
+#        with:
+#          tag_name: ${{ needs.version.outputs.version }}
+#          release_name: ${{ needs.version.outputs.version }}
+#          body: ${{ github.event.pull_request.body }}
+#
+#      - name: Download gg
+#        uses: actions/download-artifact@v2
+#        with:
+#          name: gg.cmd
+#
+#      - name: Prepare upload
+#        shell: bash
+#        run: |
+#          set -x
+#          mkdir to_blob
+#          cp gg.cmd to_blob
+#
+#      - uses: LanceMcCarthy/Action-AzureBlobUpload@v2
+#        with:
+#          connection_string: ${{ secrets.ConnectionString }}
+#          container_name: $web
+#          source_folder: to_blob
+#
+#      - name: Upload Release Asset
+#        id: upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ github.token}}
+#        with:
+#          upload_url: ${{ steps.create_release.outputs.upload_url }}
+#          asset_path: ./gg.cmd
+#          asset_name: gg.cmd
+#          asset_content_type: text/x-shellscript
