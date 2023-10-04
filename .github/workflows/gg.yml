@@ -39,13 +39,13 @@ jobs:
         include:
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-          - os: macos-latest
+          - os: macos-12
             target: x86_64-apple-darwin
           - os: ubuntu-latest
             target: x86_64-unknown-linux-musl
           - os: buildjet-2vcpu-ubuntu-2204-arm
             target: aarch64-unknown-linux-musl
-          - os: macos-latest-xlarge
+          - os: macos-13
             target: aarch64-apple-darwin
 
     runs-on: ${{ matrix.os }}
@@ -140,7 +140,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-latest
+          - os: macos-12
             target: x86_64-apple-darwin
             stage4: x86_64-apple-darwin
             # TODO: Version too new
@@ -156,7 +156,7 @@ jobs:
           - os: buildjet-2vcpu-ubuntu-2204-arm
             target: aarch64-unknown-linux-gnu
             stage4: aarch64-unknown-linux-musl
-          - os: macos-latest-xlarge
+          - os: macos-13
             target: aarch64-apple-darwin
             stage4: aarch64-apple-darwin
 
@@ -279,7 +279,7 @@ jobs:
     needs: stage1
     strategy:
       matrix:
-        os: [ macos-latest-xlarge ]
+        os: [ macos-13 ]
         cmd: [ "node -v", "java -version", "gradle -version",  "maven -v", "openapi version", "deno -V" ]
 
     runs-on: ${{ matrix.os }}
